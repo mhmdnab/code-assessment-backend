@@ -43,23 +43,6 @@ app.get("/products/:id", async (req: Request, res: Response) => {
   }
 });
 
-// 3. GET /products?category=Apparel - filters products by category
-app.get("/products", async (req: Request, res: Response) => {
-  try {
-    const { category } = req.query;
-
-    const products = category
-      ? await prisma.product.findMany({
-          where: { category: String(category) },
-        })
-      : await prisma.product.findMany();
-
-    res.json(products);
-  } catch (error) {
-    res.status(500).json({ error: "Failed to fetch products" });
-  }
-});
-
 const PORT = process.env.PORT || 5001;
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
